@@ -1,6 +1,3 @@
-
-
-
 /**
  * Each instance of this class stores a time of day in hours and minutes.
  * 
