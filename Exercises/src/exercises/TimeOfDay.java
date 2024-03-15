@@ -18,7 +18,7 @@ public class TimeOfDay {
 	private int minutes;
 	
 	
-	/*
+	/* Constructor
 	 * @pre | 0 <= hours && hours <= 23
 	 * @pre | 0 <= minutes && minutes <= 59
 	 * 
@@ -33,7 +33,6 @@ public class TimeOfDay {
 	 * @post | getHours() == hours
 	 * @post | getMinutes() == minutes
      */
-	// Constructor
 	public TimeOfDay(int hours, int minutes) {
 		if (!(0 <= hours && hours <= 23))
             throw new IllegalArgumentException("hours out of range");
