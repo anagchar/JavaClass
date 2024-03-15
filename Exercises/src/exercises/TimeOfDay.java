@@ -1,28 +1,47 @@
 package exercises;
 
+// Procedure for developing a data abstraction:
+// 	1. Develop the API
+// 		1.1 Write a line of informal documentation for the class, stating what an instance represents/stores.
+//		1.2 Define the raw abstract state space (i.e declare the getters/inspectors.
+//		1.3 Define the valid abstract state space (i.e write the abstract state invariants).
+//		1.4 Declaring and documenting the constructors and mutators
+// 	2. Implement the API
+// 		2.1 Define the representation (store the abstract state and compute the memory)
+// 			2.1.1. Define the raw concrete state space (i.e declare the fields)
+// 			2.1.2. Define the valid concrete state space (i.e write the representation invariants a.k.a concrete state invariants).
+// 			2.1.3 Define the abstraction function (i.e. implement the getters/inspectors).
+//			2.1.4 Perform sanity checks:
+//				A. The inspectors should not crash when called in any valid concrete state 
+//				B. Valid
+//		2.2 Implement the constructors and the mutators
+
 /**
  * Each instance of this class stores a time of day in hours and minutes.
  * 
  * @invar The hours are between 0 and 23. | 0 <= getHours() && getHours() <= 23
  * @invar The minutes are between 0 and 59. | 0 <= getMinutes() && getMinutes() <= 59
+ * @invar getMinutesSinceMidnight() == getHours() * 60 + getMinutes()
  * 
  */
 
 public class TimeOfDay {
 	
-	/*
+	/**
 	 * @invar | 0 <= hours && hours <= 23
 	 * @invar | 0 <= minutes && minutes <= 59
      */
 	private int hours;
 	private int minutes;
 	
+	/**
+	 * @invar | 0 <= minutesSinceMidnight && minutesSinceMidnight < 24 * 60
+	 */
+	private int minutesSinceMidnight;
 	
-	/* Constructor
-	 * @pre | 0 <= hours && hours <= 23
-	 * @pre | 0 <= minutes && minutes <= 59
+	/** Constructor
 	 * 
-	 * @mutates | this
+	 * 
 	 * @throws IllegalArgumentException if the given hours are not between 0
      *         and 23
      *    | !(0 <= hours && hours <= 23)
@@ -40,9 +59,67 @@ public class TimeOfDay {
             throw new IllegalArgumentException("minutes out of range");
 		this.hours = hours;
 		this.minutes = minutes;
+		this.minutesSinceMidnight = hours * 60 + minutes;
 	}
 	
-	// Getters
+	/** Sets the hours to the given value
+	 * 
+	 * @throws IllegalArgumentException | newHours < 0 || 24 <= newHours
+	 * 
+	 * @mutates | this
+	 * 
+	 * @post | getHours() == newHours
+	 * @post | getMinutes() == old(getMinutes())
+	 * 
+	 */
+	public void setHours(int newHours) {
+		if (newHours < 0 || 24 <= newHours) {
+			throw new IllegalArgumentException("Bad 'initialNbHours' ");
+		}
+		this.hours = newHours;
+		
+		this.minutesSinceMidnight = newHours * 60 + minutesSinceMidnight % 60;
+		
+		
+	}
+	
+	/** Sets the minutes to the given value
+	 * 
+	 * @throws IllegalArgumentException | newMinutes < 0 || 24 <= newMinutes
+	 * 
+	 * @mutates | this
+	 * 
+	 * @post | getMinutes() == newMinutes
+	 * @post | getHours() == old(getHours())
+	 * 
+	 */
+	public void setMinutes(int newMinutes) {
+		if (newMinutes < 0 || 24 <= newMinutes) {
+			throw new IllegalArgumentException("Bad 'initialNbMinutes' ");
+		}
+		this.minutes = newMinutes;
+		
+		this.minutesSinceMidnight = minutesSinceMidnight - minutesSinceMidnight % 60 + newMinutes;
+		
+		
+	}
+	
+	/**
+	 * @pre | 0 <= newMinutesSinceMidnight && newMinutesSinceMidnight < 24 * 60
+	 * 
+	 * @mutates | this
+	 * 
+	 * @post | getMinutesSinceMidnight() == newMinutesSinceMidnight
+	 */
+	public void setMinutesSinceMidnight(int newMinutesSinceMidnight) {
+		this.hours = newMinutesSinceMidnight / 60;
+		this.minutes = newMinutesSinceMidnight % 60;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getHours() {
 		return this.hours;
 	}
@@ -51,25 +128,8 @@ public class TimeOfDay {
 		return this.minutes;
 	}
 	
-	// Setters
-	public void setHours(int hours) {
-		this.hours = hours;
-	}
-	
-	public void setMinutes(int minutes) {
-		this.minutes = minutes;
-	}
-	
-	// Getter the time in minutes since midnight
 	public int getMinutesSinceMidnight() {
 		return this.hours * 60 + this.minutes;
-	}
-	
-	
-	// Setter the time in minutes since midnight
-	public void setTime(int minutesSinceMidnight) {
-		this.hours = minutesSinceMidnight / 60;
-		this.minutes = minutesSinceMidnight % 60;
 	}
 	
 	/**
