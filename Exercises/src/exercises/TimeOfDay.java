@@ -3,7 +3,7 @@ package exercises;
 // Procedure for developing a data abstraction:
 // 	1. Develop the API
 // 		1.1 Write a line of informal documentation for the class, stating what an instance represents/stores.
-//		1.2 Define the raw abstract state space (i.e declare the getters/inspectors.
+//		1.2 Define the raw abstract state space (i.e declare the getters/inspectors).
 //		1.3 Define the valid abstract state space (i.e write the abstract state invariants).
 //		1.4 Declaring and documenting the constructors and mutators
 // 	2. Implement the API
