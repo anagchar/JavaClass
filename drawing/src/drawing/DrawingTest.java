@@ -14,11 +14,11 @@ class Point {
 	}
 }
 
-abstract class Shape { // Shape is the supperclass of Circle and Polygon
+sealed class Shape permits Circle, Polygon { // Shape is the supperclass of Circle and Polygon
 	
 }
 
-class Circle extends Shape { // Circle is a subclass of Shape
+final class Circle extends Shape { // Circle is a subclass of Shape
 	final Point center;
 	final int radius;
 
@@ -28,7 +28,7 @@ class Circle extends Shape { // Circle is a subclass of Shape
 	}
 }
 
-class Polygon extends Shape { // Polygon is a subclass of Shape
+final class Polygon extends Shape { // Polygon is a subclass of Shape
 	final Point[] vertices;
 
 	Polygon(Point[] vertices) {
@@ -50,8 +50,9 @@ class Drawing {
 				result += "<polygon points='";
 				for (Point p : polygon.vertices) {
 					result += " " + p.x + " " + p.y;
-				result += "'/>";
+				
 				}
+				result += "'/>";
 				assert shape instanceof Polygon;
 			}
 			}
@@ -64,7 +65,8 @@ class DrawingTest {
 	@Test
 	void test() {
 		Drawing myDrawing = new Drawing();
-		myDrawing.shapes = new Shape[] { new Circle(new Point(10, 20), 30),
+		myDrawing.shapes = new Shape[] { 
+				new Circle(new Point(10, 20), 30),
 				new Polygon(new Point[] { new Point(0, 0), new Point(10, 0), new Point(0, 10) }) };
 		
 		assertEquals("<svg xmlns='http://w3c.org/2000/SVG'><circle x='10' y='20' r='30'/><polygon points=' 0 0 10 0 0 10'/></svg>", myDrawing.toSVG());

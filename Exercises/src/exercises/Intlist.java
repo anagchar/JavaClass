@@ -1,96 +1,95 @@
 package exercises;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
+// 1. Define the API
+// 	1.1 Write a line of informal documentation for the class, explaining what an instance represents (immutable abstraction)/stores (mutable abstraction).
+// 	1.2 Define the raw abstract state space (= declaring the inspectors/getters).
+//  1.3 Define the valud abstract state space (= writing down the abstract state invariants),
+//  either as @invar clauses in the Javadoc for the class or as @post clauses in the Javadoc for the inspectors)
+//  1.4 Define and documenting the constructors and the mutators.
+
+// 2. Implement the API
+//     2.1 Define the representation
+//     	2.1.1 Define the raw concrete state space (= define the fields)
+//     	2.1.2 Define the set of valid concrete states (= write down the representation invariants)
+//			(= concrete state invariants, = private class invariants)
+//		2.1.3 Define the mapping from valid concrete states to abstract states (= implement the inspectors)
+//		2.1.4 Perform sanity checks:
+//	    	2.1.4.1 The inspectords must never crash when called in a valid concrete state.
+//			2.1.4.2 The inspectors must map 
+
+/**
+ * Each instance of this class stores a sequence of int values.
+ */
 public class Intlist {
 	
-	/** Private fields
-	 * @invar | 0 <= size && size <= elements.length
+	/**
 	 * @invar | elements != null
+	 * 
+	 * @representationObject
 	 */
 	private int[] elements;
-	private int size;
 	
-	/**
-	 * Constructor
-	 * @throws IllegalArgumentException | initialelements == null
-	 * @throws IllegalArgumentException | initialsize < 0
+	/** Private fields
 	 * 
-	 * @post | toArray() == initialelements
-	 * @post | getSize() == initialsize
-	 */
-	public Intlist(int[] initialelements, int initialsize) {
-		if (initialelements == null)
-			throw new IllegalArgumentException("elements is null");
-		if (initialsize < 0) {
-			throw new IllegalArgumentException("size is negative");
-		}
-		this.elements = Arrays.copyOf(initialelements, initialsize); // defensive copy in order to avoid aliasing
-		this.size = initialsize;
-	}
-	
-	/**
-	 * Returns the elements
-	 * @return
-	 */
-	public int[] toArray() {
-        return Arrays.copyOf(elements, size); // defensive copy in order to avoid aliasing
-    }
-	
-	/**
-	 * Adds a value to the list.
-	 * @throws IllegalArgumentException if the index is out of bounds
-	 * 		| index < 0 || index > getSize()
-	 * @throws IllegalArgumentException if the list is full 
-	 * 		| getSize() == getElements().length
-	 * 
-	 * @mutates | this
-	 * 
-	 * @post | getSize() == old(getSize())
-	 * @post | toArray() == IntStream.concat(Arrays.stream(getElements()), Arrays.stream(new int[] {value})).toArray()
-	 */
-	public void add(int value, int index) {
-		if (index < 0 || index > size)
-			throw new IllegalArgumentException("Index out of bounds");
-		if (size == elements.length)
-			throw new IllegalArgumentException("List is full");
-		
-		// Shift elements to the right to make space for the new value
-		System.arraycopy(elements, index, elements, index + 1, size - index);
-		this.elements[index] = value;
-		size++;
-		
-    }
-	
-	/**
-	 * Removes the last element from the list
-	 * @throws IllegalArgumentException if the list is empty
-	 *         | getSize() == 0
-	 */
-	public void removeLast() {
-		if (size == 0) {
-			throw new IllegalArgumentException("List is empty");
-		}
-		size--;
-	}
-	
-	
-	/**
-	 * Returns the element at the given index
+	 * @post | result != null
 	 */
 	public int[] getElements() {
-		return Arrays.copyOf(elements, size);
+		return elements.clone();
 	}
 	
 	/**
-	 * Returns the size of the list
-	 * 
-	 * @return | getSize()
-	 */
-	public int getSize() {
-		return this.size;
+	 * @post | result == getElements().length
+     */
+	public int getLength() {
+		return elements.length;
 	}
 	
-
+	/**
+	 * @post | 0 <= index && index < getLength()
+	 * 
+	 * @inspects | this
+	 * 
+	 * @post | result == getElements()[index]
+	 */	
+	public int getElementAt(int index) {
+		return elements[index];
+	}
+	
+	/**
+     * @pre | initialElements != null
+     * 
+     * @inspects | initialElements
+     * 
+     * @post | Arrays.equals(getElements(), initialElements)
+     */
+	public Intlist(int[] initialElements) {
+        this.elements = initialElements.clone();
+    }
+	
+	/**
+	 * @mutates | this
+	 * 
+	 * @post | getLength() == old(getLength()) + 1
+	 * @post The existing elements are unchanged.
+	 * 		 | Arrays.equals(getElements(), 0, old(getLength()), old(getElements()), 0, old(getLength()))
+	 * @post | getElementAt(old(getLength())) == element
+     */
+	public void add(int element) {
+		elements = Arrays.copyOf(elements, elements.length + 1);
+		elements[elements.length - 1] = element;
+	}
+	
+	/**
+	 * @mutates | this
+	 * 
+	 * @pre | getLength() > 0
+	 * 
+	 * @post | getLength() == old(getLength()) - 1
+	 * @post | Arrays.equals(getElements(), 0, getLength(), old(getElements()), 0, getLength())
+     */
+	public void removeLast() {
+		elements = Arrays.copyOf(elements, elements.length - 1);
+	}
 }

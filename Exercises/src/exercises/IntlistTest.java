@@ -8,13 +8,21 @@ class IntlistTest {
 
 	@Test
 	void test() {
-		int[] elements = new int[3];
-		Intlist list = new Intlist(elements, 0);
-		list.add(1, 0);
-		list.add(2, 1);
-		list.add(3, 2);
-		int[] result = list.toArray();
-		assertArrayEquals(new int[] { 1, 2, 3 }, result);
+		Intlist myIntList = new Intlist(new int[] {10, 20, 30});
+		assertArrayEquals(new int[] {10, 20, 30}, myIntList.getElements());
+		assertEquals(3, myIntList.getLength());
+		assertEquals(10, myIntList.getElementAt(0));
+		
+		myIntList.add(40);
+		assertArrayEquals(new int[] {10, 20, 30, 40}, myIntList.getElements());
+		assertEquals(4, myIntList.getLength());
+		assertEquals(40, myIntList.getElementAt(3));
+		
+		myIntList.removeLast();
+		assertArrayEquals(new int[] {10, 20, 30}, myIntList.getElements());
+		assertEquals(3, myIntList.getLength());
+		assertEquals(30, myIntList.getElementAt(2));
+		
 	}
 
 }
