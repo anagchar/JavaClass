@@ -14,20 +14,20 @@ public class Intlist {
 	
 	/**
 	 * Constructor
-	 * @throws IllegalArgumentException | elements == null
-	 * @throws IllegalArgumentException | size < 0
+	 * @throws IllegalArgumentException | initialelements == null
+	 * @throws IllegalArgumentException | initialsize < 0
 	 * 
-	 * @post | toArray() == elements
-	 * @post | getSize() == size
+	 * @post | toArray() == initialelements
+	 * @post | getSize() == initialsize
 	 */
-	public Intlist(int[] elements, int size) {
-		if (elements == null)
+	public Intlist(int[] initialelements, int initialsize) {
+		if (initialelements == null)
 			throw new IllegalArgumentException("elements is null");
-		if (size < 0) {
+		if (initialsize < 0) {
 			throw new IllegalArgumentException("size is negative");
 		}
-		this.elements = Arrays.copyOf(elements, elements.length); // defensive copy in order to avoid aliasing
-		this.size = size;
+		this.elements = Arrays.copyOf(initialelements, initialsize); // defensive copy in order to avoid aliasing
+		this.size = initialsize;
 	}
 	
 	/**
@@ -40,6 +40,8 @@ public class Intlist {
 	
 	/**
 	 * Adds a value to the list.
+	 * @throws IllegalArgumentException if the index is out of bounds
+	 * 		| index < 0 || index > getSize()
 	 * @throws IllegalArgumentException if the list is full 
 	 * 		| getSize() == getElements().length
 	 * 
@@ -49,9 +51,13 @@ public class Intlist {
 	 * @post | toArray() == IntStream.concat(Arrays.stream(getElements()), Arrays.stream(new int[] {value})).toArray()
 	 */
 	public void add(int value, int index) {
-		if (size == elements.length) {
+		if (index < 0 || index > size)
+			throw new IllegalArgumentException("Index out of bounds");
+		if (size == elements.length)
 			throw new IllegalArgumentException("List is full");
-		}
+		
+		// Shift elements to the right to make space for the new value
+		System.arraycopy(elements, index, elements, index + 1, size - index);
 		this.elements[index] = value;
 		size++;
 		
