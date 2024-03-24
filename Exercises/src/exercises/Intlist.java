@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 /**
  * Each instance of this class stores a sequence of int values.
- * 
  */
 public class Intlist {
 	
