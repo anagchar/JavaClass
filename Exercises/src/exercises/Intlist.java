@@ -18,7 +18,6 @@ import java.util.Arrays;
 //		2.1.4 Perform sanity checks:
 //	    	2.1.4.1 The inspectords must never crash when called in a valid concrete state.
 //			2.1.4.2 The inspectors must map 
-
 /**
  * Each instance of this class stores a sequence of int values.
  */
