@@ -14,7 +14,7 @@ class Point {
 	}
 }
 
-sealed class Shape permits Circle, Polygon { // Shape is the supperclass of Circle and Polygon
+class Shape extends Object { // Shape is the supperclass of Circle and Polygon
 	
 }
 
@@ -34,6 +34,10 @@ final class Polygon extends Shape { // Polygon is a subclass of Shape
 	Polygon(Point[] vertices) {
 		this.vertices = vertices.clone();
 	}
+}
+
+final class Oval extends Shape {
+	
 }
 
 class Drawing {
