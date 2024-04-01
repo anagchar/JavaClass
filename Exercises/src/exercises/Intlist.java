@@ -5,7 +5,7 @@ import java.util.Arrays;
 // 1. Define the API
 // 	1.1 Write a line of informal documentation for the class, explaining what an instance represents (immutable abstraction)/stores (mutable abstraction).
 // 	1.2 Define the raw abstract state space (= declaring the inspectors/getters).
-//  1.3 Define the valud abstract state space (= writing down the abstract state invariants),
+//  1.3 Define the valid abstract state space (= writing down the abstract state invariants),
 //  either as @invar clauses in the Javadoc for the class or as @post clauses in the Javadoc for the inspectors)
 //  1.4 Define and documenting the constructors and the mutators.
 
@@ -16,7 +16,7 @@ import java.util.Arrays;
 //			(= concrete state invariants, = private class invariants)
 //		2.1.3 Define the mapping from valid concrete states to abstract states (= implement the inspectors)
 //		2.1.4 Perform sanity checks:
-//	    	2.1.4.1 The inspectords must never crash when called in a valid concrete state.
+//	    	2.1.4.1 The inspectors must never crash when called in a valid concrete state.
 //			2.1.4.2 The inspectors must map 
 /**
  * Each instance of this class stores a sequence of int values.
