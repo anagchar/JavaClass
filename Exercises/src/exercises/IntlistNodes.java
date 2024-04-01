@@ -15,6 +15,13 @@ public class IntlistNodes {
 	}
 	
 	private Node first; // this is a field of the inner class and this field is a pointer to a node object (Node next)
+	private int getLengthPrivate() {
+		int result = 0;
+		for (Node n = first; n != null; n = n.next) {
+			result++;
+		}
+		return result;
+	}
 	
 	/** Private fields
 	 * 
@@ -34,11 +41,7 @@ public class IntlistNodes {
 	 * @post | result == getElements().length
      */
 	public int getLength() {
-		int result = 0;
-		for (Node n = first; n != null; n = n.next) {
-			result++;
-		}
-		return result;
+		return getLengthPrivate();
 	}
 	
 	/**
