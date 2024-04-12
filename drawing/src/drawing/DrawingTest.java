@@ -14,7 +14,7 @@ class Point {
 	}
 }
 
-class Shape extends Object { // Shape is the supperclass of Circle and Polygon
+class Shape extends Object { // Shape is the direct superclass of Circle and Polygon
 	
 }
 
@@ -36,33 +36,34 @@ final class Polygon extends Shape { // Polygon is a subclass of Shape
 	}
 }
 
-final class Oval extends Shape {
-	
+class Oval extends Shape {
+	Point focus1;
+	Point focus2;
 }
 
 class Drawing {
-	Shape[] shapes;
-	
-	String toSVG() {
-		String result = "<svg xmlns='http://w3c.org/2000/SVG'>";
-		for (Shape shape : shapes) { // enhanced for loop
-			if (shape instanceof Circle circle) {
-				// Circle circle = (Circle) shape; //typecast: accepted by the static type check; checked by the runtime; throws ClassCastException if false
-				result += "<circle x='" + circle.center.x + "' y='" + circle.center.y + "' r='" + circle.radius + "'/>";
-			} else {
-				Polygon polygon = (Polygon) shape; //typecast: accepted by the static type check; checked by the runtime; throws ClassCastException if false
-				result += "<polygon points='";
-				for (Point p : polygon.vertices) {
-					result += " " + p.x + " " + p.y;
-				
-				}
-				result += "'/>";
-				assert shape instanceof Polygon;
-			}
-			}
-		return result + "</svg>";
-		}
-	}
+    Shape[] shapes;
+    
+    String toSVG() {
+        String result = "<svg xmlns='http://www.w3.org/2000/svg'>";
+        for (Shape shape : shapes) {
+            switch(shape) {
+                case Circle circle -> {
+                    result += "<circle cx='" + circle.center.x + "' cy='" + circle.center.y + "' r='" + circle.radius + "'/>";
+                }
+                case Polygon polygon -> {
+                    result += "<polygon points='";
+                    for (Point p : polygon.vertices) {
+                        result += " " + p.x + "," + p.y;
+                    }
+                    result += "'/>";
+                }
+                default -> throw new AssertionError();
+            }
+        }
+        return result + "</svg>";
+    }
+}
 
 class DrawingTest {
 
@@ -71,7 +72,8 @@ class DrawingTest {
 		Drawing myDrawing = new Drawing();
 		myDrawing.shapes = new Shape[] { 
 				new Circle(new Point(10, 20), 30),
-				new Polygon(new Point[] { new Point(0, 0), new Point(10, 0), new Point(0, 10) }) };
+				new Polygon(new Point[] { new Point(0, 0), new Point(10, 0), new Point(0, 10) }),
+				new Oval()}; // This will throw an exception because we are trying to add Oval without typecasting it to Circle or Polygon
 		
 		assertEquals("<svg xmlns='http://w3c.org/2000/SVG'><circle x='10' y='20' r='30'/><polygon points=' 0 0 10 0 0 10'/></svg>", myDrawing.toSVG());
 		
