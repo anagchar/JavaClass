@@ -128,7 +128,7 @@ class InstructionsTestWithDynamic {
        int[] registers = {x, y, 0};
        Machine machine = new Machine();
        machine.execute(registers, instructions);
-//       System.out.println("Final PC: " + machine.pc);
+     System.out.println("Final PC: " + machine.pc);
 //       System.out.println("Final Registers: " + Arrays.toString(machine.registers));
        return machine.registers[2];
     }
