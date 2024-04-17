@@ -125,6 +125,7 @@ class InstructionsTestWithDynamic {
         		new Halt()
         		
         };
+       
        int[] registers = {x, y, 0};
        Machine machine = new Machine();
        machine.execute(registers, instructions);
