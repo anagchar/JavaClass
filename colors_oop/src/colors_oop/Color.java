@@ -20,7 +20,7 @@ public class Color {
 		return 0;
 	}
 	
-	public int getVakue() {
+	public int getValue() {
 		return 0;
 	}
 	
