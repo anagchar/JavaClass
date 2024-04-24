@@ -1,38 +1,44 @@
 package interpreter_oop;
 
-import java.lang.*;
+interface Value {}
 
-abstract class Value {}
-
-abstract class AddableValue extends Value {
+interface AddableValue extends Value {
 	abstract Value add(Value other);
 }
 
-class IntValue extends AddableValue {
+interface AndableValue extends Value {
+	abstract Value and(Value other);
+}
+
+class IntValue implements AddableValue, AndableValue {
 	int value;
 
 	IntValue(int value) {
 		this.value = value;
 	}
 	@Override
-	Value add(Value other) {
+	public Value add(Value other) {
        return new IntValue(this.value + ((IntValue) other).value);
     }
+	@Override
+	public Value and(Value other) {
+		return new IntValue(this.value & ((IntValue) other).value);
+	}
 }
 
-class StringValue extends AddableValue {
+class StringValue implements AddableValue {
 	String value;
 
 	StringValue(String value) {
 		this.value = value;
 	}
 	@Override
-	Value add(Value other) {
+	public Value add(Value other) {
 		return new StringValue(this.value + ((StringValue) other).value);
 	}
 }
 
-class FloatValue extends AddableValue {
+class FloatValue implements AddableValue {
 	float value;
 
 	FloatValue(float value) {
@@ -40,16 +46,21 @@ class FloatValue extends AddableValue {
 	}
 
 	@Override
-	Value add(Value other) {
+	public Value add(Value other) {
 		return new FloatValue(this.value + ((FloatValue) other).value);
 	}
 }
 
-class BooleanValue extends Value {
+class BooleanValue implements AndableValue {
 	boolean value;
 
 	BooleanValue(boolean value) {
 		this.value = value;
+	}
+	
+	@Override
+	public Value and(Value other) {
+		return new BooleanValue(this.value && ((BooleanValue) other).value);
 	}
 }
 
@@ -61,11 +72,7 @@ public class Interpreter {
 			yield ((AddableValue)value1).add(value2);
         }
         case '&' -> {
-        	yield switch (value1) {
-            case BooleanValue b -> new BooleanValue(b.value && ((BooleanValue) value2).value);
-            case IntValue i -> new BooleanValue(i.value != 0 && ((IntValue) value2).value != 0);
-            default -> throw new RuntimeException("Bad values");
-            };
+        	yield ((AndableValue)value1).and(value2);
         }
         default -> throw new RuntimeException("Bad operator");
         };
