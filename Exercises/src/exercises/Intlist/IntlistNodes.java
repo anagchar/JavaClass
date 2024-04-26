@@ -1,4 +1,4 @@
-package exercises;
+package exercises.Intlist;
 
 import java.util.Arrays;
 

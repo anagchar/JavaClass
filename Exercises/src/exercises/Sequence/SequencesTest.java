@@ -17,7 +17,7 @@ class SequencesTest {
 		assertNotEquals(new NonEmptySequence(1, new NonEmptySequence(5, new EmptySequence())), mySequence2);
 		assertEquals("[1, 5]", mySequence2.toString());
 		assertEquals("[]", mySequence1.toString());
-		assertEquals(1, mySequence2.getHead());
+		assertEquals(1, ((NonEmptySequence) mySequence2).getHead());
 	}
 	
 }

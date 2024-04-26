@@ -1,4 +1,4 @@
-package exercises;
+package exercises.Intlist;
 
 import static org.junit.jupiter.api.Assertions.*;
 

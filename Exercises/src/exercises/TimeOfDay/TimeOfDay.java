@@ -1,4 +1,4 @@
-package exercises;
+package exercises.TimeOfDay;
 
 // Procedure for developing a data abstraction:
 // 	1. Develop the API
