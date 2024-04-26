@@ -12,5 +12,9 @@ public class EmptySequence extends Sequences {
 	    return "[]";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof EmptySequence;
+	}
 	
 	}
