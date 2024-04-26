@@ -22,18 +22,20 @@ public class NonEmptySequence extends Sequences {
     
     @Override
     public String toString() {
-    	return "[" + head + toStringTail(tail) + "]";
+    	return "[" + head + (
+    			tail instanceof EmptySequence ? "]" 
+    					: ", " + tail.toString().substring(1)); // the substring means that we chop off the first character , in our case is the opening bracket
     }
-    
-    private String toStringTail(Sequences tail) {
-        if (tail instanceof EmptySequence) {
-            return "";
-        } else if (tail instanceof NonEmptySequence) {
-            NonEmptySequence nonEmptyTail = (NonEmptySequence) tail;
-            return ", " + nonEmptyTail.head + toStringTail(nonEmptyTail.tail);
-        }
-        return ""; // fallback, should not reach here if all cases are handled
-    }
+// Another method that was made to be used in the above method.
+//    private String toStringTail(Sequences tail) {
+//        if (tail instanceof EmptySequence) {
+//            return "";
+//        } else if (tail instanceof NonEmptySequence) {
+//            NonEmptySequence nonEmptyTail = (NonEmptySequence) tail;
+//            return ", " + nonEmptyTail.head + toStringTail(nonEmptyTail.tail);
+//        }
+//        return ""; // fallback, should not reach here if all cases are handled
+//    }
     
     @Override
     public boolean equals(Object obj) {
