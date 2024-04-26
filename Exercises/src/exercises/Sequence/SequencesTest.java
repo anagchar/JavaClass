@@ -1,4 +1,4 @@
-package exercises;
+package exercises.Sequence;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +17,7 @@ class SequencesTest {
 		assertNotEquals(new NonEmptySequence(1, new NonEmptySequence(5, new EmptySequence())), mySequence2);
 		assertEquals("[1, 5]", mySequence2.toString());
 		assertEquals("[]", mySequence1.toString());
+		assertEquals(1, mySequence2.getHead());
 	}
 	
 }

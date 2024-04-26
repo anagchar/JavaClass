@@ -1,37 +1,12 @@
-package exercises;
+package exercises.Sequence;
 
-abstract sealed class Sequences permits EmptySequence, NonEmptySequence {
+public class NonEmptySequence extends Sequences {
+	private final int head;
+	private final Sequences tail; // with the "final" you make the tail an immutable object
 	
-	public abstract int getLength(); 
+	public int getHead() { return head; }
 	
-
-	public abstract String toString();
-
-	
-	public static void main(String[] args) {
-		Sequences O = new NonEmptySequence(1, new NonEmptySequence(5, new NonEmptySequence(9, new EmptySequence())));
-		System.out.println(O);
-	}
-}
-
-final class EmptySequence extends Sequences {
-	
-	@Override
-    public int getLength() {
-        return 0;
-    }
-	
-	@Override
-	public String toString() {
-	    return "[]";
-	}
-
-	
-	}
-
-final class NonEmptySequence extends Sequences {
-	int head;
-	Sequences tail;
+	public Sequences getTail() { return tail; }
     
     NonEmptySequence(int head, Sequences tail){
         this.head = head;
@@ -59,7 +34,3 @@ final class NonEmptySequence extends Sequences {
     }
     
     }
-
-
-
-
