@@ -64,7 +64,7 @@ public class Person {
 	 * @mutates_properties | this.getFather(), father.getChildren()
 	 * @post | getFather() == father
 	 * @post "father"'s set of childer equals their old set of children plus "this".
-	 * 		//| father.getChildren().equals(LogicalSet.plus(old(father.getChildren()), this))
+	 * 		| father.getChildren().equals(LogicalSet.plus(old(father.getChildren()), this))
 	 * @post Another option instead the above but is not recommended.
 	 * 		| father.getChildren().equals(Stream.concat(old(father.getChildren()).stream(), Stream.of(this)).collect(Collectors.toSet()))
 	 */
@@ -77,7 +77,7 @@ public class Person {
 	 * @pre | getFather() != null
 	 * @mutates_properties | getFather(), getFather().getChildren() // evaluated in the pre state
 	 * @post | getFather() == null
-	 * //@post | old(getFather()).getChildren().equals(LogicalSet.minus(old(getFather().getChildren()), this))
+	 * @post | old(getFather()).getChildren().equals(LogicalSet.minus(old(getFather().getChildren()), this))
 	 */
 	public void clearFather() {
 		father.children.remove(this);
