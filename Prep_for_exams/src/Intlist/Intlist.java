@@ -48,6 +48,7 @@ public class Intlist {
 	 * @post | getElements() != old(getElements())
 	 * @post | getElements().length == old(getElements().length) + 1
 	 * @post | Arrays.equals(getElements(), 0, old(getElements().length), old(getElements()), 0, old(getElements().length))
+	 * @post | getElementAt(old(getElements().length)) == value // Forgot
 	 */
 	public void add(int value) {
 		elements = Arrays.copyOf(elements, elements.length + 1);
