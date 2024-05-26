@@ -1,8 +1,8 @@
-package exercises.Intlist;
+package Intlist;
 
 import java.util.Arrays;
 
-public class IntlistNodes {
+public class IntilistNodes {
 	
 	private class Node {
 		int value;
@@ -14,7 +14,9 @@ public class IntlistNodes {
 	    }
 	}
 	
+	// if Node object is the first Node then it can be null
 	private Node first; // this is a field of the inner class and this field is a pointer to a node object (Node next)
+	
 	private int getLengthPrivate() {
 		int result = 0;
 		for (Node n = first; n != null; n = n.next) {
@@ -66,7 +68,7 @@ public class IntlistNodes {
      * 
      * @post | Arrays.equals(getElements(), initialElements)
      */
-	public IntlistNodes(int[] initialElements) {
+	public IntilistNodes(int[] initialElements) {
         Node n = null;
         for (int i = initialElements.length - 1; i >= 0; i--) {
         	n = new Node(initialElements[i], n);}

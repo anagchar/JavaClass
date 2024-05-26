@@ -10,9 +10,11 @@ class IntlistTest {
 
 	@Test
 	void ConstructorAndGetters() {
-		Intlist array = new Intlist(new int[] {1,3,4,5});
+		int[] list = new int[] {1,3,4,5};
+		Intlist array = new Intlist(list);
 		assertArrayEquals(new int[] {1,3,4,5}, array.getElements());
 		assertEquals(1, array.getElementAt(0));
+		
 	}
 	
 	@Test
