@@ -13,7 +13,7 @@ class InstructionsTest {
 	}
 	
 	int power(int x, int y) {
-       Instructions[] instructions = {
+       InstructionsWithDynamicBinding[] instructions = {
         		new LoadConstant(2, 1),
         		new JumpIfZero(1, 5),
         		new Decrement(1),
