@@ -18,6 +18,12 @@ public class TransparentColor extends Color {
 		return super.equals(other) && other instanceof TransparentColor c && transparency == c.transparency;
 	}
 	
+//	@Override
+//	public boolean equals(Object other) {
+//		return super.equals(other) && transparency == ((TransparentColor)other).transparency;
+//	}
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), transparency);

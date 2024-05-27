@@ -28,6 +28,7 @@ public class Color {
 	public boolean equals(Object other) {
 		Color c = (Color) other;
 		return red == c.red && green == c.green & blue == c.blue;
+//		return red == ((Color)other).red && green == ((Color)other).green && blue == ((Color)other).blue;
 		//return other instanceof Color c && red == c.red && green == c.green & blue == c.blue;
 	}
 	
