@@ -26,25 +26,5 @@ class InstructionsTest {
        new Machine().execute(registers, instructions);
        return registers[2];
     }
-	
-	@Test
-    void testNoRepresentationExposure() {
-        Machine machine = new Machine();
-        int[] registers = new int[2];
-        Instructions[] instructions = { new LoadConstant(0, 10), new LoadConstant(1, 20), new Halt() };
-
-        machine.execute(registers, instructions);
-
-        // Clone registers to capture state after execution
-        int[] originalState = registers.clone();
-
-        // Attempt to modify the array outside the Machine class
-        registers[0] = 99;
-        registers[1] = 99;
-
-        // Verify that the modifications outside the Machine class did not affect the cloned state
-        assertEquals(10, originalState[0]);
-        assertEquals(20, originalState[1]);
-    }
 
 }

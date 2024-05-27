@@ -57,31 +57,29 @@ final class Halt extends Instructions {}
 
 class Machine {
 	
-	int pc;
-	int[] registers;
 	
 	void execute(int[] registers, Instructions[] instructions) {
-		this.registers = registers.clone();
-		while(0 <= this.pc) {
+		int pc = 0;
+		while(0 <= pc) {
 			Instructions i = instructions[pc];
 			if (i instanceof LoadConstant lc) {
 				registers[lc.r] = lc.c;
-				this.pc++;
+				pc++;
 			} else if (i instanceof Decrement d) {
 				registers[d.r]--;
-				this.pc++;
+				pc++;
 			} else if (i instanceof Multiply m) {
 				registers[m.r1] *= registers[m.r2];
-				this.pc++;
+				pc++;
 			} else if (i instanceof JumpIfZero jiz) {
 				if (registers[jiz.r] == 0) {
-					this.pc = jiz.a;
+					pc = jiz.a;
 				} else
-					this.pc++;
+					pc++;
 			} else if (i instanceof Jump j) {
-				this.pc = j.a;
+				pc = j.a;
 			} else if (i instanceof Halt h) {
-				this.pc = -1;
+				pc = -1;
 			}
 				
 		}
