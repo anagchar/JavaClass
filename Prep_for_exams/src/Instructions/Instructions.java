@@ -62,25 +62,53 @@ class Machine {
 		int pc = 0;
 		while(0 <= pc) {
 			Instructions i = instructions[pc];
-			if (i instanceof LoadConstant lc) {
+			switch(i) {
+			case LoadConstant lc -> {
 				registers[lc.r] = lc.c;
 				pc++;
-			} else if (i instanceof Decrement d) {
+			}
+			case Decrement d -> {
 				registers[d.r]--;
 				pc++;
-			} else if (i instanceof Multiply m) {
+			}
+			case Multiply m -> {
 				registers[m.r1] *= registers[m.r2];
 				pc++;
-			} else if (i instanceof JumpIfZero jiz) {
+			}
+			case JumpIfZero jiz -> {
 				if (registers[jiz.r] == 0) {
 					pc = jiz.a;
 				} else
 					pc++;
-			} else if (i instanceof Jump j) {
+			}
+			case Jump j -> {
 				pc = j.a;
-			} else if (i instanceof Halt h) {
+			}
+			case Halt h -> {
 				pc = -1;
 			}
+				
+			}
+
+//			if (i instanceof LoadConstant lc) {
+//				registers[lc.r] = lc.c;
+//				pc++;
+//			} else if (i instanceof Decrement d) {
+//				registers[d.r]--;
+//				pc++;
+//			} else if (i instanceof Multiply m) {
+//				registers[m.r1] *= registers[m.r2];
+//				pc++;
+//			} else if (i instanceof JumpIfZero jiz) {
+//				if (registers[jiz.r] == 0) {
+//					pc = jiz.a;
+//				} else
+//					pc++;
+//			} else if (i instanceof Jump j) {
+//				pc = j.a;
+//			} else if (i instanceof Halt h) {
+//				pc = -1;
+//			}
 				
 		}
 	}
