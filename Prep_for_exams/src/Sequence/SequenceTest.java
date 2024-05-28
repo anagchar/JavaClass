@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import exercises.Sequence.EmptySequence;
-import exercises.Sequence.NonEmptySequence;
-import exercises.Sequence.Sequences;
 
 class SequenceTest {
 
