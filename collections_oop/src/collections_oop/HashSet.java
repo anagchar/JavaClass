@@ -10,7 +10,7 @@ public class HashSet implements Set {
 	 * @invar | IntStream.range(0, buckets.length).allMatch(i -> 
 	 * 		  |		buckets[i] != null &&
 	 *        |		buckets[i].stream().allMatch(e -> 
-	 *        | 	Math.floorMod(e.hashCode(), buckets.length) == i)) // to take a non-negative reminder
+	 *        | 	Math.floorMod(e.hashCode(), buckets.length) == i)) // to take a non-negative remainder of a division
 	 * @invar | size == Arrays.stream(buckets).mapToInt(b -> b.size()).sum()
 	 * 
 	 * @representationObject
