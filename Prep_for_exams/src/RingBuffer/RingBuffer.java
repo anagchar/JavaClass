@@ -100,8 +100,15 @@ public class RingBuffer implements List {
 				elements[(start + i + 1) % elements.length];
 			elements[(start + size - 1) % elements.length] = null;
 		}
+		size--;
 	}
-	size--;
+
+	@Override
+	public void remove(Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 
 }
