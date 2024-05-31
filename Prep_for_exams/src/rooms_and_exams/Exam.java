@@ -12,23 +12,21 @@ import logicalcollections.LogicalSet;
 public class Exam {
 	
 	/**
-	 * @invar | exam != null
 	 * @invar | rooms.stream().allMatch(room -> room != null && room.getExams().contains(this))
-	 */
-	private Exam exam;
-	/**
-	 * 
+	 * @representationObject
 	 * @peerObjects
 	 */
-	private Set<Room> rooms;
+	Set<Room> rooms = new HashSet<>();
 	
 	/**
 	 * @creates | result
 	 * @post | result != null
+	 * @post | result.stream().allMatch(room -> room != null && room.getExams().contains(this))
+	 * @peerObjects
 	 * 
 	 */
 	public Set<Room> getRooms() { 
-		return new HashSet<>(rooms); // to avoid representation exposure
+		return Set.copyOf(rooms); // to avoid representation exposure
 	}
 	
 	/**
@@ -37,14 +35,9 @@ public class Exam {
 	 * @mutates_properties | this.getRooms(), room.getExams() 
 	 * @post | room.getExams().equals(LogicalSet.plus(old(room.getExams()), this))
 	 */
-	public Set<Room> addRoom(Room room) {
-		if (rooms.contains(room)) {
-			return new HashSet<>(rooms);
-		} else {
-			rooms.add(room);
-			room.addExam(this);
-			return new HashSet<>(rooms);
-		}
+	public void addRoom(Room room) {
+		rooms.add(room);
+		room.exams.add(this);
 	}
 	
 	/**
@@ -53,30 +46,15 @@ public class Exam {
 	 * @mutates_properties | this.getRooms(), room.getExams()
 	 * @post | room.getExams().equals(LogicalSet.minus(old(room.getExams()), this))
 	 */
-	public Set<Room> removeRoom(Room room) { 
-		if (rooms.contains(room)) {
-			rooms.remove(room);
-			room.removeExam(this);
-			return new HashSet<>(rooms);
-		}
-		return new HashSet<>(null);
+	public void removeRoom(Room room) {
+		rooms.remove(room);
+		room.exams.remove(this);
 	}
 	
 	/**
-	 * @pre | name != null
-	 * @creates | this
+	 * @post | getRooms().isEmpty()
 	 */
-	public Exam(String name) { 
-		name = exam.toString();
-		this.rooms = new HashSet<>();
-	}
+	public Exam() {}
 	
-	/**
-	 * @post | result != null
-	 * @inspects | this
-	 */
-	public Exam getExam() { 
-		return this.exam;
-	}
 
 }
