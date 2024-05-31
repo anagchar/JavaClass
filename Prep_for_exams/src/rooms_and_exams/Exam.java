@@ -54,7 +54,9 @@ public class Exam {
 	/**
 	 * @post | getRooms().isEmpty()
 	 */
-	public Exam() {}
+	public Exam() {
+		this.rooms = new HashSet<>();
+	}
 	
 
 }

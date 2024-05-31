@@ -51,6 +51,8 @@ public class Room {
 	/**
 	 * @post | getExams().isEmpty()
 	 */
-	public Room() {}
+	public Room() {
+		this.exams = new HashSet<>();
+	}
 
 }
