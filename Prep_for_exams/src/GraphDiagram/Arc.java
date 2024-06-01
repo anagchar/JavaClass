@@ -1,10 +1,21 @@
 package GraphDiagram;
 
+import java.util.Collection;
+import java.util.Set;
+import logicalcollections.*;
+
+/**
+ * @invar | getDepartureAngle() >= 0 && getDepartureAngle() <= 359
+ * @invar | getSourceNode() == null || getSourceNode().getOutgoingArcs().contains(this)
+ * @invar | getTargetNode() == null || getTargetNode().getOutgoingArcs().contains(this)
+ */
 public class Arc {
 	
 	/**
 	 * @invar | 0 <= departureAngle 
 	 * @invar | departureAngle <= 359
+	 * @invar | sourceNode == null || sourceNode.outgoingArcs.contains(this)
+	 * @invar | targetNode == null || targetNode.incomingArcs.contains(this)
 	 */
 	int departureAngle;
 	
@@ -12,19 +23,95 @@ public class Arc {
 	
 	Node targetNode;
 	
-	public int getDepartureAngle() { throw new RuntimeException("Not yet implemented"); }
+	/**
+	 * 
+	 * @inspects | this
+	 */
+	public int getDepartureAngle() { 
+		return this.departureAngle;
+	}
 	
-	public Node getSourceNode() { throw new RuntimeException("Not yet implemented"); }
+	/**
+	 * 
+	 * @inspects | this
+	 * @post | getSourceNode() != null
+	 */
+	public Node getSourceNode() { 
+		return sourceNode; 
+	}
 	
-	public Node getTargetNode() { throw new RuntimeException("Not yet implemented"); }
+	/**
+	 * 
+	 * @inspects | this
+	 * @post | getTargetNode() != null
+	 */
+	public Node getTargetNode() { 
+		return targetNode; 
+	}
 	
-	public void setSourceNode() { throw new RuntimeException("Not yet implemented"); }
+	/**
+	 * 
+	 * @throws IllegalArgumentException | departureAngle < 0 || departureAngle > 359
+	 * @post | getDepartureAngle() == departureAngle
+	 * @post | getSourceNode() == null
+	 * @post | getTargetNode() == null
+	 * 
+	 */
+	public Arc(int departureAngle) {
+		if (departureAngle < 0 || departureAngle > 359) {
+			throw new IllegalArgumentException("This departure angle is out of the bounds");
+		}
+		this.departureAngle = departureAngle;
+		
+	}
 	
-	public void setTargetNode() { throw new RuntimeException("Not yet implemented"); }
+	/** 
+	 * @pre | sourceNode != null
+	 * @pre | getSourceNode() == null
+	 * @mutates_properties | this.getSourceNode(), sourceNode.getOutgoingArcs()
+	 * @post | getSourceNode() != null
+	 * @post | sourceNode.getOutgoingArcs().equals(LogicalSet.plus(old(sourceNode.getOutgoingArcs()), this))
+	 * 
+	 */
+	public void setSourceNode(Node sourceNode) { 
+		this.sourceNode = sourceNode; 
+		sourceNode.outgoingArcs.add(this);
+	}
 	
-	public void unlinkSourceNode() { throw new RuntimeException("Not yet implemented"); }
+	/**
+	 * @pre | targetNode != null
+	 * @pre | getSourceNode() == null
+	 * @mutates_properties | this.getTargetNode(), targetNode.getOutgoingArcs()
+	 * @post | getTargetNode() != null
+	 * @post | targetNode.getIncomingArcs().equals(LogicalSet.plus(old(targetNode.getIncomingArcs()), this))
+	 *
+	 */
+	public void setTargetNode(Node targetNode) { 
+		this.targetNode = targetNode;
+		targetNode.incomingArcs.add(this);
+	}
 	
-	public void unlinkTargetNode() { throw new RuntimeException("Not yet implemented"); }
+	/**
+	 * @pre | getSourceNode() != null
+	 * @mutates_properties | this.getSourceNode(), getSourceNode().getOutgoingArcs()
+	 * @post | getSourceNode() == null
+	 * @post | getSourceNode().getOutgoingArcs().equals(LogicalSet.minus(old(getSourceNode().getOutgoingArcs()), this))
+	 */
+	public void unlinkSourceNode() { 
+		sourceNode.outgoingArcs.remove(this);
+		this.sourceNode = null;
+	}
+	
+	/**
+	 * @pre | getTargetNode() != null
+	 * @mutates_properties | this.getTargetNode(), getTargetNode().getIncomingArcs()
+	 * @post | getTargetNode() == null
+	 * @post | getTargetNode().getIncomingArcs().equals(LogicalSet.minus(old(getSourceNode().getIncomingArcs()), this))
+	 */
+	public void unlinkTargetNode() { 	
+		targetNode.incomingArcs.remove(this);
+		this.targetNode = null;
+	}
 	
 	
 	
