@@ -41,8 +41,8 @@ public class Airport {
 	 * @post | other.getConnected().equals(LogicalSet.plus(old(other.getConnected()), this))
 	 */
 	public void connectedWith(Airport other) {
-		this.getConnected().add(other);
-		other.getConnected().add(this);
+		this.Airports.add(other);
+		other.Airports.add(this);
 	}
 	
 	/**
@@ -53,8 +53,8 @@ public class Airport {
 	 * 
 	 */
 	public void disconnectedWith(Airport other) {
-		this.getConnected().remove(other);
-		other.getConnected().remove(this);
+		this.Airports.remove(other);
+		other.Airports.remove(this);
 	}
 
 }
