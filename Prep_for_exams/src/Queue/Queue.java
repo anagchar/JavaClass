@@ -40,8 +40,8 @@ abstract public class Queue {
 	
 	/**
 	 * @mutates | this
-	 * @post | old(getSize()) == getSize() - 1
-	 * @post | Arrays.equals(toArray(), 0, old(getSize()), old(toArray()), 1, old(getSize()))
+	 * @post | old(getSize()) == getSize() + 1
+	 * @post | Arrays.equals(toArray(), 0, getSize(), old(toArray()), 1, old(getSize()))
 	 */
 	public abstract Object dequeue();
 

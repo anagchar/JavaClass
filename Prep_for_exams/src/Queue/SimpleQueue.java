@@ -23,7 +23,7 @@ public class SimpleQueue extends Queue {
 	}
 	
 	/**
-	 * @post | getSize() != 0
+	 * @post | getSize() == 0
 	 */
 	public SimpleQueue() {};
 	
