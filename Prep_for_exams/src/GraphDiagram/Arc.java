@@ -7,7 +7,7 @@ import logicalcollections.*;
 /**
  * @invar | getDepartureAngle() >= 0 && getDepartureAngle() <= 359
  * @invar | getSourceNode() == null || getSourceNode().getOutgoingArcs().contains(this)
- * @invar | getTargetNode() == null || getTargetNode().getOutgoingArcs().contains(this)
+ * @invar | getTargetNode() == null || getTargetNode().getIncomingArcs().contains(this)
  */
 public class Arc {
 	
@@ -33,8 +33,7 @@ public class Arc {
 	
 	/**
 	 * 
-	 * @inspects | this
-	 * @post | getSourceNode() != null
+	 * @peerObject
 	 */
 	public Node getSourceNode() { 
 		return sourceNode; 
@@ -42,8 +41,8 @@ public class Arc {
 	
 	/**
 	 * 
-	 * @inspects | this
-	 * @post | getTargetNode() != null
+	 * @peerObject
+	 * 
 	 */
 	public Node getTargetNode() { 
 		return targetNode; 
@@ -80,7 +79,7 @@ public class Arc {
 	
 	/**
 	 * @pre | targetNode != null
-	 * @pre | getSourceNode() == null
+	 * @pre | getTargetNode() == null
 	 * @mutates_properties | this.getTargetNode(), targetNode.getOutgoingArcs()
 	 * @post | getTargetNode() != null
 	 * @post | targetNode.getIncomingArcs().equals(LogicalSet.plus(old(targetNode.getIncomingArcs()), this))
@@ -95,7 +94,7 @@ public class Arc {
 	 * @pre | getSourceNode() != null
 	 * @mutates_properties | this.getSourceNode(), getSourceNode().getOutgoingArcs()
 	 * @post | getSourceNode() == null
-	 * @post | getSourceNode().getOutgoingArcs().equals(LogicalSet.minus(old(getSourceNode().getOutgoingArcs()), this))
+	 * @post | old(getSourceNode()).getOutgoingArcs().equals(LogicalSet.minus(old(getSourceNode().getOutgoingArcs()), this))
 	 */
 	public void unlinkSourceNode() { 
 		sourceNode.outgoingArcs.remove(this);
@@ -106,7 +105,7 @@ public class Arc {
 	 * @pre | getTargetNode() != null
 	 * @mutates_properties | this.getTargetNode(), getTargetNode().getIncomingArcs()
 	 * @post | getTargetNode() == null
-	 * @post | getTargetNode().getIncomingArcs().equals(LogicalSet.minus(old(getSourceNode().getIncomingArcs()), this))
+	 * @post | old(getTargetNode()).getIncomingArcs().equals(LogicalSet.minus(old(getTargetNode().getIncomingArcs()), this))
 	 */
 	public void unlinkTargetNode() { 	
 		targetNode.incomingArcs.remove(this);
