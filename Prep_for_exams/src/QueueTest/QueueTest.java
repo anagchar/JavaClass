@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import Queue.Queue;
+import Queue.RingBuffer;
 import Queue.SimpleQueue;
 
 class QueueTest {
 
-	@Test
-	void test() {
-		SimpleQueue queue = new SimpleQueue();
+	void testQueue(Queue queue) {
 		assertEquals(0, queue.getSize());
 		
 		queue.enqueue("hello");
@@ -52,7 +51,15 @@ class QueueTest {
 	
 		assertNotEquals(queue2, queue);
 		assertNotEquals(queue, queue2);
+	}
 
+	@Test
+	void test() {
+		SimpleQueue queue = new SimpleQueue();
+		testQueue(queue);
+		
+		RingBuffer ringBuffer = new RingBuffer();
+		testQueue(ringBuffer);
 	}
 
 
