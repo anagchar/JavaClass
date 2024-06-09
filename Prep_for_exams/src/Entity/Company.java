@@ -38,7 +38,7 @@ public class Company extends Entity {
 	 * 
 	 * @mutates_properties | newOwner.getOwnedCompanies(), getOwner(), getOwner().getOwnedCompanies()
 	 * @post | getOwner() == newOwner
-	 * @post | old(getOwner()).getOwnedCompanies().equals(LogicalSet.plus(old(newOwner.getOwnedCompanies()), this))
+	 * @post | getOwner().getOwnedCompanies().equals(LogicalSet.plus(old(getOwner().getOwnedCompanies()), this))
 	 * 
 	 */
 	public void transferTo(Entity newOwner) {
