@@ -5,22 +5,19 @@ import java.util.Set;
 import logicalcollections.*;
 
 /**
- * @invar | getNode() != null
  * @invar | getNeighbors() != null
  * @invar | getNeighbors().stream().allMatch(node -> node != null && node.getNeighbors().contains(this))
  */
 public class Node {
 	
 	/**
-	 * @invar | node != null
 	 * @invar | neighbors != null
-	 * @invar | neighbors.stream().allMatch(node -> node != null && node.getNeighbors().contains(this))
+	 * @invar | neighbors.stream().allMatch(node -> node != null && node.neighbors.contains(this))
 	 * 
 	 * @representationObject
 	 * @peerObject
 	 */
-	Node node;
-	Set<Node> neighbors = new HashSet<>();
+	private Set<Node> neighbors = new HashSet<>();
 	
 	/**
 	 * 
@@ -30,20 +27,12 @@ public class Node {
 		return Set.copyOf(neighbors);
 	}
 	
-	/**
-	 * 
-	 * @post | result != null
-	 * 
-	 */
-	public Node getNode() {
-		return node;
-	}
 	
 	/**
 	 * @throws IllegalArgumentException | other == null
-	 * @throws IllegalArgumentException | getNode().getNeighbors().contains(other)
-	 * @mutates_properties | getNode().getNeighbors(), other.getNeighbors()
-	 * @post | getNode().getNeighbors().equals(LogicalSet.plus(old(getNode().getNeighbors()), other))
+	 * @throws IllegalArgumentException | getNeighbors().contains(other)
+	 * @mutates_properties | getNeighbors(), other.getNeighbors()
+	 * @post | getNeighbors().equals(LogicalSet.plus(old(getNeighbors()), other))
 	 * @post | other.getNeighbors().equals(LogicalSet.plus(old(other.getNeighbors()), this))
 	 */
 	public void linkNodes(Node other) {
@@ -59,9 +48,9 @@ public class Node {
 	
 	/**
 	 * @pre | linkedNode != null
-	 * @pre | !(getNode().getNeighbors().contains(linkedNode))
-	 * @mutates_properties | getNode().getNeighbors(), linkedNode.getNeighbors()
-	 * @post | getNode().getNeighbors().equals(LogicalSet.minus(old(getNode().getNeighbors()), this))
+	 * @pre | getNeighbors().contains(linkedNode)
+	 * @mutates_properties | getNeighbors(), linkedNode.getNeighbors()
+	 * @post | getNeighbors().equals(LogicalSet.minus(old(getNeighbors()), linkedNode))
 	 * @post | linkedNode.getNeighbors().equals(LogicalSet.minus(old(linkedNode.getNeighbors()), this))
 	 */
 	public void removeLink(Node linkedNode) {
