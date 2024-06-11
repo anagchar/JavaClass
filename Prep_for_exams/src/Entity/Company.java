@@ -21,6 +21,14 @@ public class Company extends Entity {
 		return owner;
 	}
 	
+	public Entity getUltimateOwner() {
+		Entity ultiOwner = this.owner;
+		while (!(ultiOwner instanceof Person))  {
+			 ultiOwner = ((Company) owner).owner;
+		}
+		return ((Person) ultiOwner);
+	} 
+	
 	/**
 	 * @pre | owner != null
 	 * @mutates_properties | owner.getOwnedCompanies()
