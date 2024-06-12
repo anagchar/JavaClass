@@ -32,7 +32,7 @@ public final class RectangularNode extends Node {
 	 */
 	public RectangularNode(int width, int height) {
 		if (width < 0 || height < 0) {
-			throw new IllegalArgumentException("This departure angle is out of the bounds");
+			throw new IllegalArgumentException("The width or the height is out of the bound");
 		}
 		this.width = width;
 		this.height = height;

@@ -3,6 +3,8 @@ package GraphDiagramTest;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 import GraphDiagram.Arc;
@@ -65,6 +67,29 @@ class GraphDiagramTest {
 		assertNull(arc1.getSourceNode());
 		arc1.unlinkTargetNode();
 		assertNull(arc1.getTargetNode());
+		
+		RectangularNode rn1 = new RectangularNode(10, 5);
+		CircularNode cn1 = new CircularNode(100);
+		Arc a1 = new Arc(45);
+		assertEquals(45, a1.getDepartureAngle());
+		assertNull(a1.getSourceNode());
+		assertNull(a1.getTargetNode());
+		
+		a1.setSourceNode(rn1);
+		assertSame(rn1, a1.getSourceNode());
+		assertEquals(Set.of(a1), rn1.getOutgoingArcs());
+		
+		a1.setTargetNode(cn1);
+		assertSame(cn1, a1.getTargetNode());
+		assertEquals(Set.of(a1), cn1.getIncomingArcs());
+		
+		a1.unlinkSourceNode();
+		assertNull(a1.getSourceNode());
+		assertEquals(Set.of(), rn1.getOutgoingArcs());
+		
+		a1.unlinkTargetNode();
+		assertNull(a1.getTargetNode());
+		assertEquals(Set.of(), cn1.getIncomingArcs());
 	}
 
 }
